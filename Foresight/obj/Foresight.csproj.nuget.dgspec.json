@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\josep\\source\\repos\\Foresight\\Foresight\\Foresight.csproj": {}
+    "C:\\Users\\raheel.khan\\source\\repos\\FinalProject\\Foresight\\Foresight\\Foresight.csproj": {}
   },
   "projects": {
-    "C:\\Users\\josep\\source\\repos\\Foresight\\Foresight\\Foresight.csproj": {
+    "C:\\Users\\raheel.khan\\source\\repos\\FinalProject\\Foresight\\Foresight\\Foresight.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\josep\\source\\repos\\Foresight\\Foresight\\Foresight.csproj",
+        "projectUniqueName": "C:\\Users\\raheel.khan\\source\\repos\\FinalProject\\Foresight\\Foresight\\Foresight.csproj",
         "projectName": "Foresight",
-        "projectPath": "C:\\Users\\josep\\source\\repos\\Foresight\\Foresight\\Foresight.csproj",
-        "packagesPath": "C:\\Users\\josep\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\josep\\source\\repos\\Foresight\\Foresight\\obj\\",
+        "projectPath": "C:\\Users\\raheel.khan\\source\\repos\\FinalProject\\Foresight\\Foresight\\Foresight.csproj",
+        "packagesPath": "C:\\Users\\raheel.khan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\raheel.khan\\source\\repos\\FinalProject\\Foresight\\Foresight\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\josep\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\raheel.khan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,21 +43,27 @@
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.1, )"
             }
@@ -80,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
