@@ -3,16 +3,17 @@
     ViewData["Title"] = "Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1>Registration Form</h1>
 
 
 
 
-
-<form>
+<form asp-controller="Home" asp-action="EnterFormData">
 
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 1) Are you afraid of incliment weather?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 1) Are you afraid of incliment weather?</b></label>
+        <select class="form-control" id="exampleFormControlSelect1" name="Question1" required>
+            <option></option>
             <option>I am not afraid of incliment weather at all</option>
             <option>2</option>
             <option>3</option>
@@ -26,8 +27,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 2) Do you like cold weather?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 2) Do you like cold weather?</b></label>
+        <select class="form-control" id="exampleFormControlSelect2" name="Question2" required>
+            <option></option>
             <option>I love cold weather</option>
             <option>2</option>
             <option>3</option>
@@ -41,8 +43,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 3) Do you like hot weather?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 3) Do you like hot weather?</b></label>
+        <select class="form-control" id="exampleFormControlSelect3" name="Question3" required>
+            <option></option>
             <option>I love hot weather</option>
             <option>2</option>
             <option>3</option>
@@ -56,8 +59,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 4) Are you Afraid of Pollution?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 4) Are you Afraid of Pollution?</b></label>
+        <select class="form-control" id="exampleFormControlSelect4" name="Question4" required>
+            <option></option>
             <option>I am not afraid of Pollution at all</option>
             <option>2</option>
             <option>3</option>
@@ -71,8 +75,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 5) Do you have allergies?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 5) Do you have allergies?</b></label>
+        <select class="form-control" id="exampleFormControlSelect5" name="Question5" required>
+            <option></option>
             <option>I am not allergic to anything</option>
             <option>2</option>
             <option>3</option>
@@ -86,8 +91,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 6) Are you afraid of a disease outbreak?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 6) Are you afraid of a disease outbreak?</b></label>
+        <select class="form-control" id="exampleFormControlSelect6" name="Question6" required>
+            <option></option>
             <option>I am not afraid of disease outbreak at all</option>
             <option>2</option>
             <option>3</option>
@@ -101,8 +107,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 7) Are you afraid of large crowds?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 7) Are you afraid of large crowds?</b></label>
+        <select class="form-control" id="exampleFormControlSelect7" name="Question7" required>
+            <option></option>
             <option>I am not afraid of large crowds at all</option>
             <option>2</option>
             <option>3</option>
@@ -116,8 +123,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 8) Are you afraid of getting sick in public?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 8) Are you afraid of getting sick in public?</b></label>
+        <select class="form-control" id="exampleFormControlSelect8" name="Question8" required>
+            <option></option>
             <option>I am not afraid of getting sick in public at all</option>
             <option>2</option>
             <option>3</option>
@@ -131,8 +139,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Question 9) What percentage of danger are you comfortable with?</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="exampleFormControlSelect1"><b>Question 9) What percentage of danger are you comfortable with?</b></label>
+        <select class="form-control" id="exampleFormControlSelect9" name="Question9" required>
+            <option></option>
             <option>Below 10% Danger</option>
             <option>10% Danger</option>
             <option>20% Danger</option>
@@ -144,6 +153,10 @@
             <option>80% Danger</option>
             <option>Above 90% Danger</option>
         </select>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control btn btn-primary" type="submit" />
     </div>
 
 </form>
