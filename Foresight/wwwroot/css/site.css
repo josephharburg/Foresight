@@ -69,3 +69,29 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.mainpagelogo {
+    width: auto;
+    height: 30vh;
+}
+
+.speechbubble {
+    margin-top: 5px;
+    position: relative;
+    background-color: #351C75;
+    color: black;
+    border-color: #464647;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+    .speechbubble:after {
+        content: " ";
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -15px;
+        border-bottom: 15px solid #351C75;
+        border-right: 8px solid transparent;
+        border-left: 8px solid transparent;
+    }
