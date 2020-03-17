@@ -16,5 +16,6 @@ namespace Foresight.Models
         public string Question7 { get; set; }
         public string Question8 { get; set; }
         public string Question9 { get; set; }
+        public DateTime? FormDate { get; set; }
     }
 }

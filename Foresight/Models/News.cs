@@ -15,16 +15,17 @@ namespace Foresight.Models
 
         public double NewsRiskCalculator(int disease, int sick)
         {
-            if (disease > 5 && this.content.ToLower().Contains("coronavirus"))
+            if (disease > 5 && sick > 5 && this.title.ToLower().Contains("coronavirius"))
+            {
+                return sick + disease;
+            }
+            else if (disease > 5 && this.title.ToLower().Contains("coronavirus"))
             {
                 return disease;
             }
-            else if (sick > 5 && this.content.ToLower().Contains("coronavirus"))
+            else if (sick > 5 && this.title.ToLower().Contains("coronavirus"))
             {
                 return sick;
-            }
-            else if(disease > 5 && sick > 5 && this.content.ToLower().Contains("coronavirius")){
-                return sick + disease;
             }
             else if(this.title.ToLower().Contains("coronavirus"))
             {

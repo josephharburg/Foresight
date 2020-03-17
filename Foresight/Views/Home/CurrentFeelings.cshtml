@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "CurrentFeelings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CurrentFeelings</h1>
+<form asp-controller="Home" asp-action="EnterFormData">
+    <div class="form-group">
+        <label for="sleep">How many hours did you sleep did you get last night?</label>
+        <select class="form-control" id="sleep" name="sleep" required>
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="stress">How stressed do you feel right now? (1 = Not Stressed, 10 = Very Stressed)</label>
+        <select class="form-control" id="stress" name="stress" required>
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sick">Are you sick right now?</label>
+        <select class="form-control" id="sick" name="sick" required>
+            <option></option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control btn btn-primary" type="submit" />
+    </div>
+
+</form>

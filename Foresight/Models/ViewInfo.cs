@@ -17,5 +17,10 @@ namespace Foresight.Models
         public List<News> news = new List<News>();
         public string latitude { get; set; }
         public string longitude { get; set; }
+
+        public double tempriskpercent { get; set; }
+        public double aqiriskpercent { get; set; }
+        public double inclimentriskpercent { get; set; }
+        public double newsrisk { get; set; }
     }
 }

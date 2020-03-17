@@ -39,9 +39,10 @@ namespace Foresight.Controllers
             {
                 count += item.NewsRiskCalculator(values["disease"], values["sick"]);
             }
-            count += w.AqiRiskCalculator(values["pollution"], values["allergies"]);
-            count += w.TempRiskCalculator(values["cold"], values["hot"]);
-            count += w.InclimentRiskCalculator(values["incliment"]);
+            viewInfo.newsrisk = count;
+            viewInfo.aqiriskpercent = count += w.AqiRiskCalculator(values["pollution"], values["allergies"]);
+            viewInfo.tempriskpercent = count += w.TempRiskCalculator(values["cold"], values["hot"]);
+            viewInfo.inclimentriskpercent = count += w.InclimentRiskCalculator(values["incliment"]);
             viewInfo.percentage = Math.Round((count / 70 * 100));
             if (viewInfo.percentage < 50)
             {
@@ -62,10 +63,8 @@ namespace Foresight.Controllers
         }
         public Dictionary<string, int> GetIntsFromForm(Form form)
         {
-            
-            string it = "1";
             Dictionary<string, int> values = new Dictionary<string, int>();
-            values.Add("incliment", int.Parse(it));
+            values.Add("incliment", int.Parse(form.Question1));
             values.Add("cold", int.Parse(form.Question2));
             values.Add("hot", int.Parse(form.Question3));
             values.Add("pollution", int.Parse(form.Question4));
@@ -83,7 +82,7 @@ namespace Foresight.Controllers
             ForesightContext db = new ForesightContext();
             Form f = new Form();
             f.UserName = User.Identity.Name;
-
+            f.FormDate = DateTime.Now;
             f.Question1 = form.Question1;
             f.Question2 = form.Question2;
             f.Question3 = form.Question3;
@@ -95,25 +94,12 @@ namespace Foresight.Controllers
             f.Question9 = form.Question9;
 
             db.Add(f);
-            //{
-
-            //    Question1 = form.Question1,
-            //    Question2 = form.Question2,
-            //    Question3 = form.Question3,
-            //    Question4 = form.Question4,
-            //    Question5 = form.Question5,
-            //    Question6 = form.Question6,
-            //    Question7 = form.Question7,
-            //    Question8 = form.Question8,
-            //    Question9 = form.Question9
-
-
-
-            //});
+           
             db.SaveChanges();
 
-            return View();
+            return RedirectToAction("Index");
         }
+       
 
         public IActionResult Registration()
         {

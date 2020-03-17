@@ -137,6 +137,8 @@ namespace Foresight.Models
             {
                 entity.Property(e => e.FormId).HasColumnName("FormID");
 
+                entity.Property(e => e.FormDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Question1).HasMaxLength(256);
 
                 entity.Property(e => e.Question2).HasMaxLength(256);
