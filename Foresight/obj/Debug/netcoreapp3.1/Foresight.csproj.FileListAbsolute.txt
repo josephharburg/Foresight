@@ -323,3 +323,4 @@ C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Foresight.dll
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Foresight.pdb
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\CurrentFeelings.cshtml.g.cs
+C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetPrediction.cshtml.g.cs

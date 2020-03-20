@@ -5,10 +5,10 @@
 }
 
 <h1>CurrentFeelings</h1>
-<form asp-controller="Home" asp-action="EnterFormData">
+<form asp-controller="Home" asp-action="AddCurrentFeelings">
     <div class="form-group">
         <label for="sleep">How many hours did you sleep did you get last night?</label>
-        <select class="form-control" id="sleep" name="sleep" required>
+        <select class="form-control" id="sleep" name="SleepHours" required>
             <option></option>
             <option>1</option>
             <option>2</option>
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="stress">How stressed do you feel right now? (1 = Not Stressed, 10 = Very Stressed)</label>
-        <select class="form-control" id="stress" name="stress" required>
+        <select class="form-control" id="stress" name="Stress" required>
             <option></option>
             <option>1</option>
             <option>2</option>
@@ -40,13 +40,19 @@
     </div>
     <div class="form-group">
         <label for="sick">Are you sick right now?</label>
-        <select class="form-control" id="sick" name="sick" required>
-            <option></option>
-            <option>Yes</option>
-            <option>No</option>
-        </select>
+        <input type="checkbox" class="form-control" id="sick" name="IsSick" value="true"/>
+            
     </div>
-
+    <div class="form-group">
+        <label for="hands">Have you been washing your hands regularly?</label>
+        <input type="checkbox" class="form-control" id="hands" name="WashingHands" value="true"/>
+           
+    </div>
+    <div class="form-group">
+        <label for="distance">Have you been keeping your distance from others?</label>
+        <input type="checkbox" class="form-control" id="distance" name="Distance" value="true"/>
+         
+    </div>
     <div class="form-group">
         <input class="form-control btn btn-primary" type="submit" />
     </div>

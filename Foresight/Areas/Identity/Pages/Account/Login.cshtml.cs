@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Foresight.Models;
 
 namespace Foresight.Areas.Identity.Pages.Account
 {
@@ -75,6 +76,8 @@ namespace Foresight.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
+            ForesightContext db = new ForesightContext();
+           
             returnUrl = returnUrl ?? Url.Content("~/Home/Registration");
 
             if (ModelState.IsValid)
@@ -85,7 +88,17 @@ namespace Foresight.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var firstime = db.Form.Where(x => x.UserName == User.Identity.Name).ToList();
+                    if (firstime.Count == 0)
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        returnUrl = returnUrl ?? Url.Content("~/Home/CurrentFeelings");
+                        return LocalRedirect(returnUrl);
+                    }
+                        
                 }
                 if (result.RequiresTwoFactor)
                 {

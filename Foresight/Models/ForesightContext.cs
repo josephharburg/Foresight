@@ -22,7 +22,9 @@ namespace Foresight.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<CurrentFeelings> CurrentFeelings { get; set; }
         public virtual DbSet<Form> Form { get; set; }
+        public virtual DbSet<UserData> UserData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -133,6 +135,20 @@ namespace Foresight.Models
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
+            modelBuilder.Entity<CurrentFeelings>(entity =>
+            {
+                entity.Property(e => e.CurrentFeelingsId).HasColumnName("CurrentFeelingsID");
+
+                entity.Property(e => e.CurrentFeelingsDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.HasOne(d => d.Form)
+                    .WithMany(p => p.CurrentFeelings)
+                    .HasForeignKey(d => d.FormId)
+                    .HasConstraintName("FK__CurrentFe__FormI__6FE99F9F");
+            });
+
             modelBuilder.Entity<Form>(entity =>
             {
                 entity.Property(e => e.FormId).HasColumnName("FormID");
@@ -158,6 +174,27 @@ namespace Foresight.Models
                 entity.Property(e => e.Question9).HasMaxLength(256);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<UserData>(entity =>
+            {
+                entity.HasKey(e => e.DataId)
+                    .HasName("PK__UserData__9D05305DEB688E86");
+
+                entity.Property(e => e.DataId).HasColumnName("DataID");
+
+                entity.Property(e => e.Aqi).HasColumnName("AQI");
+
+                entity.Property(e => e.AqiriskPercent).HasColumnName("AQIRiskPercent");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.UserDataDateTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Form)
+                    .WithMany(p => p.UserData)
+                    .HasForeignKey(d => d.FormId)
+                    .HasConstraintName("FK__UserData__FormID__6D0D32F4");
             });
 
             OnModelCreatingPartial(modelBuilder);
