@@ -1,22 +1,76 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model  ViewInfo
+@model Dashboard
 
-    <div class="card-group">
-        @foreach (var item in Model.userData)
+    <div class="container text-center">
+        @if (Model.userData.Count == 0)
         {
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
-
-                    <p class="card-text lead">The total Percentage for this dat was @item.TotalPercentange</p>
-                </div>
-                <a url @item.DataId
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
+            <img class="mainpagelogo" src="~/img/foresight.png" />
+            <div class="speechbubble">
+                <div class="lead text-white">You do not have any predictions yet!</div>
+            </div>
+            <a class="mx-auto text-white btn-lg" asp-controller="Home" asp-action="GetPrediction" style="background-color:#351C75;">Click Here for your First Prediction!</a>
+        }
+        @if (Model.lookingUp)
+        {
+            <img class="mainpagelogo" src="~/img/foresight.png" />
+            <div class="speechbubble">
+                <div class="lead text-white">Things are looking up! Your most recent risk was less than the previous one! Whatever you are doing keep it up!</div>
+                <div class="lead mb-2 text-center text-white">Your risk average this week is: @Model.averagePercentage% </div>
             </div>
         }
+        else if (Model.lookingUp == false && Model.averagePercentage != 0)
+        {
+            <img class="mainpagelogo" src="~/img/NegOutcome.png" />
+            <div class="speechbubble">
+                <div class="lead text-white">Things arent looking so good. Your most recent prediction was either the same risk or more than the previous one.</div>
+                <div class="lead mb-2 text-center text-white">Your risk average this week is: @Model.averagePercentage% </div>
+            </div>
+        }
+        else
+        {
 
+        }
+        <br />
+        <a class="mx-auto text-white btn-lg" asp-controller="Home" asp-action="GetPrediction" style="background-color:#351C75;">Get Prediction</a>
     </div>
+
+<div class="display-4 pb-5 text-center">Here is your past weeks risk percentages:</div>
+<div class="card-columns">
+  
+    @foreach (var item in Model.userData)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
+                <h5>@item.UserDataDateTime.GetValueOrDefault().TimeOfDay.ToString()</h5>
+                <div>Temperature: @item.Temperature</div>
+                <div>Air Pollutant Level: @item.Aqi%</div>
+                <div>Hours of Sleep: @item.Sleep</div>
+
+                <div class="card-text">Total Percentage for this predection: @item.TotalPercentange%</div>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+<div class="text-center mb-2 display-4">Here is the data for other users this week!</div>
+<div class="display-4 mb-2 text-center">The average risk this week for all other users is: @Model.allUsersAverage% </div>
+<div class="card-columns">
+    @foreach (var item in Model.otherUsers)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
+                <div>UserName: @item.Email</div>
+                <div>City Nearest To: @item.City</div>
+                <div>Temperature: @item.Temperature</div>
+                <div>Air Pollutant Level: @item.Aqi%</div>
+                <div class="card-text">Total Percentage: @item.TotalPercentange%</div>
+
+            </div>
+        </div>
+    }
+
+</div>

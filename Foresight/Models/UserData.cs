@@ -23,6 +23,8 @@ namespace Foresight.Models
         public int? FaceRiskPercent { get; set; }
         public int? DistanceRiskPercent { get; set; }
         public DateTime? UserDataDateTime { get; set; }
+        public string City { get; set; }
+        public string Email { get; set; }
 
         public virtual Form Form { get; set; }
     }

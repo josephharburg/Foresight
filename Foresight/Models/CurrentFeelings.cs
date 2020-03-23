@@ -18,8 +18,10 @@ namespace Foresight.Models
         public int? HandsRisk { get; set; }
         public int? DistanceRisk { get; set; }
         public DateTime? CurrentFeelingsDateTime { get; set; }
-        
+        public string City { get; set; }
+
         public virtual Form Form { get; set; }
+
         public void GetRiskPercents()
         {
             if (IsSick == true)
@@ -30,14 +32,14 @@ namespace Foresight.Models
             {
                 this.SickRisk = 0;
             }
-            
+
             if (SleepHours <= 5)
             {
                 this.SleepRisk = 20;
             }
             else
             {
-                this.StressRisk = 0;
+                this.SleepRisk = 0;
             }
             if (Distance == true)
             {
@@ -47,7 +49,7 @@ namespace Foresight.Models
             {
                 this.DistanceRisk = 0;
             }
-            
+
             if (Stress >= 9)
             {
                 this.StressRisk = 5;

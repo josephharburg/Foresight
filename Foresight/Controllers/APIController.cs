@@ -22,13 +22,13 @@ namespace Foresight.Controllers
             return View();
         }
 
-        public async Task<Weather> GetWeather()
+        public async Task<Weather> GetWeather(string city)
         {
             var weatherApiKey = _config["weatherApiKey"];
             Weather w = new Weather();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"https://api.airvisual.com/v2/city?city=Detroit&state=Michigan&country=USA&key={weatherApiKey}"))
+                using (var response = await httpClient.GetAsync($"https://api.airvisual.com/v2/city?city={city}&state=Michigan&country=USA&key={weatherApiKey}"))
                 {
                     var sr = await response.Content.ReadAsStringAsync();
                     JsonDocument jdoc = JsonDocument.Parse(sr);
@@ -47,7 +47,7 @@ namespace Foresight.Controllers
         {
             var newsapikey = _config["newsapikey"];
             List<News> articlelist = new List<News>();
-            string fear = "outbreak";
+            string fear = "coronavirus";
             using (var httpclient = new HttpClient())
             {
                 using (var response = await httpclient.GetAsync($"http://newsapi.org/v2/top-headlines?q={fear}&apiKey={newsapikey}"))

@@ -62,7 +62,7 @@ namespace Foresight.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/Home/CurrentFeelings");
             //returnUrl = returnUrl ?? Url.Content("~/Home/Registration");
 
             // Clear the existing external cookie to ensure a clean login process
@@ -88,14 +88,14 @@ namespace Foresight.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    var firstime = db.Form.Where(x => x.UserName == User.Identity.Name).ToList();
+                    var firstime = db.Form.Where(x => x.UserName == Input.Email).ToList();
                     if (firstime.Count == 0)
                     {
                         return LocalRedirect(returnUrl);
                     }
                     else
                     {
-                        returnUrl = returnUrl ?? Url.Content("~/Home/CurrentFeelings");
+                        returnUrl = Url.Content("~/Home/CurrentFeelings");
                         return LocalRedirect(returnUrl);
                     }
                         

@@ -139,6 +139,8 @@ namespace Foresight.Models
             {
                 entity.Property(e => e.CurrentFeelingsId).HasColumnName("CurrentFeelingsID");
 
+                entity.Property(e => e.City).HasMaxLength(255);
+
                 entity.Property(e => e.CurrentFeelingsDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.FormId).HasColumnName("FormID");
@@ -186,6 +188,10 @@ namespace Foresight.Models
                 entity.Property(e => e.Aqi).HasColumnName("AQI");
 
                 entity.Property(e => e.AqiriskPercent).HasColumnName("AQIRiskPercent");
+
+                entity.Property(e => e.City).HasMaxLength(255);
+
+                entity.Property(e => e.Email).HasMaxLength(255);
 
                 entity.Property(e => e.FormId).HasColumnName("FormID");
 

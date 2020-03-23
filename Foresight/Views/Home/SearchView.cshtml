@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "SearchView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Search for past records!</h1>
+<form>
+    <div class="form-group">
+        <label for="search">
+            Search by Day
+        </label>
+        <select class="form-control" id="search" name="search">
+            <option>Search for all the previous Mondays</option>
+            <option>Search for all the previous Tuesdays</option>
+            <option>Search for all the previous Wednesdays</option>
+            <option>Search for all the previous Thursdays</option>
+            <option>Search for all the previous Fridays</option>
+            <option>Search for all the previous Saturdays</option>
+            <option>Search for all the previous Sundays</option>
+            <option>Search for all previous records</option>
+            <option>Search for the highest risk days</option>
+        </select>
+    </div>
+
+</form>

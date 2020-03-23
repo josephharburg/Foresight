@@ -25,24 +25,28 @@ namespace Foresight.Controllers
         public IActionResult Index()
         {
             ForesightContext db = new ForesightContext();
-            List<UserData> userData = new List<UserData>();
+            Dashboard view = new Dashboard();
 
-            ViewInfo view = new ViewInfo();
             var DayofLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 6);
-            var cur = db.Form.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+
+            //Gets current user data and assigns it to a session variable
+            var cur = db.Form.Where(x => x.UserName == User.Identity.Name).OrderByDescending(x => x.FormDate).FirstOrDefault();
             HttpContext.Session.SetInt32("current", cur.FormId);
-            int highest = 0;
             foreach (var item in db.UserData)
             {
-                if(item.UserDataDateTime >= DayofLastWeek && item.FormId == HttpContext.Session.GetInt32("current"))
+                if (item.UserDataDateTime >= DayofLastWeek && item.FormId == HttpContext.Session.GetInt32("current"))
                 {
-                    userData.Add(item);
+                    view.userData.Add(item);
                 }
-                
+                else if (item.UserDataDateTime >= DayofLastWeek && item.FormId != HttpContext.Session.GetInt32("current"))
+                {
+
+                    view.otherUsers.Add(item);
+                }
             }
-            
-            view.userData = userData;
-           
+            view.GetAverageRiskPercents();
+
+            view.AreThingsLookingUp();
             return View(view);
         }
         public Dictionary<string, int> GetIntsFromForm(Form form)
@@ -56,70 +60,79 @@ namespace Foresight.Controllers
             values.Add("disease", int.Parse(form.Question6));
             values.Add("crowds", int.Parse(form.Question7));
             values.Add("sick", int.Parse(form.Question8));
+            //values.Add("threshold", int.Parse(form.Question9));
             return values;
 
         }
 
-        //public IActionResult SearchView(string choice)
-        //{
-        //    foreach(var item in db)
-        //    {
-        //        if(item.choice == )
-        //    }
+        public IActionResult SearchView(string choice)
+        {
+            ForesightContext db = new ForesightContext();
+            ViewInfo viewInfo = new ViewInfo();
+            var user = db.UserData.Where(x => x.FormId == HttpContext.Session.GetInt32("current"));
+            if (choice == "Highest")
+            {
+                var highestalltime = user.OrderByDescending(x => x.TotalPercentange);
+                var list = highestalltime.ToArray();
+                for (int x = 0; x <= 7; x++)
+                {
+                    viewInfo.userData.Add(list[x]);
+                }
+            }
+            else if (choice == "Past Month")
+            {
+                var LastMonth = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 30);
+                foreach (var item in db.UserData)
+                {
+                    if (item.UserDataDateTime >= LastMonth && item.FormId == HttpContext.Session.GetInt32("current"))
+                    {
+                        viewInfo.userData.Add(item);
+                    }
 
-        //}
+                }
+            }
+
+            return View(viewInfo);
+
+
+        }
         [Authorize]
         public async Task<IActionResult> GetPrediction()
         {
             ForesightContext db = new ForesightContext();
             APIController apis = new APIController(_config);
             ViewInfo viewInfo = new ViewInfo();
-            
-            Weather w = await apis.GetWeather();
-            
-            //Get MOST RECENT CHANGES TO FORM!!!
-            var currentuser = db.Form.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
-            CurrentFeelings currentFeelings = db.CurrentFeelings.Where(x => x.FormId == currentuser.FormId).FirstOrDefault();
+
+            //Gets all the weather infomation and puts into a model
+
+
+            //Gets the current user based on latest update to profile by ordering dates by descending and selecting first one
+            var currentuser = db.Form.Where(x => x.UserName == User.Identity.Name).OrderByDescending(x => x.FormDate).FirstOrDefault();
+
+            //Same idea except for CurrentFeelings table
+            CurrentFeelings currentFeelings = db.CurrentFeelings.OrderByDescending(x => x.CurrentFeelingsDateTime).FirstOrDefault();
+            Weather w = await apis.GetWeather(currentFeelings.City);
+            //Puts labels to integers in Form from current user
             Dictionary<string, int> values = GetIntsFromForm(currentuser);
+
+            //Creates the text output based on user profile and api data for temperature then air quality
             viewInfo.TempOutput = w.TempOutputGenerator(values["cold"], values["hot"]);
             viewInfo.AqiOutput = w.AqiOutputGenerator(values["pollution"], values["allergies"]);
+
+            //Checks to see if its raining and if the user is afraid of incliment weather and creates output for either case.
             w.IsRainingOrSnowing(values["incliment"]);
             viewInfo.Incliment = w.rainSnowStormOutput;
-            viewInfo.news = await apis.GetNews();
-            double count = 0;
-            double percent = viewInfo.GetRiskPercentsFromAPI(w, values);
-            count += percent;
-            currentFeelings.GetRiskPercents();
-            List<double> highestRisk = new List<double>()
-            {
-                viewInfo.newsRiskPercent,
-                viewInfo.tempRiskPercent,
-                viewInfo.inclimentRiskPercent,
-                viewInfo.aqiRiskPercent,
-                (double)currentFeelings.DistanceRisk,
-                (double)currentFeelings.HandsRisk,
-                (double)currentFeelings.SleepRisk,
-                (double)currentFeelings.StressRisk
-            };
-            double highest = 0;
-            
-            foreach(var item in highestRisk)
-            {
-                if(item > highest)
-                {
-                    highest = item;
-                }
-            }
-            count += (int)currentFeelings.DistanceRisk;
-            count += (int)currentFeelings.HandsRisk;
-            count += (int)currentFeelings.SleepRisk;
-            count += (int)currentFeelings.StressRisk;
-            viewInfo.totalPercentage = Math.Round((count / 130 * 100));
-            if(currentFeelings.SickRisk == 100)
-            {
-                viewInfo.totalPercentage = 100;
-            }
 
+            //Gets the news
+            viewInfo.news = await apis.GetNews();
+
+            //Uses all the data collected from current feelings to get the risk percentages based on user values
+            currentFeelings.GetRiskPercents();
+
+            //Uses all the data collected to get the risk percentages based on user values and the api results
+            viewInfo.GetRiskPercents(w, values, currentFeelings);
+
+            //Accumulates the Data and adds it to the database for further use on Dashboard and Search
             UserData userData = new UserData()
             {
                 TotalPercentange = (int)viewInfo.totalPercentage,
@@ -134,11 +147,19 @@ namespace Foresight.Controllers
                 KeepingDistance = currentFeelings.Distance,
                 WashingHands = currentFeelings.WashingHands,
                 IsSick = currentFeelings.IsSick,
-                Stress = (int)currentFeelings.Stress
+                Stress = (int)currentFeelings.Stress,
+                City = currentFeelings.City,
+                Email = User.Identity.Name
             };
             db.UserData.Add(userData);
             db.SaveChanges();
-            if(currentFeelings.SickRisk == 100)
+            //if(values["threshold"] < viewInfo.totalPercentage)
+            //{
+            //    viewInfo.riskThreshold = true;
+            //}
+            //This Adjusts the view to show proper risk colors and percentage
+            #region colorsofrisk
+            if (currentFeelings.SickRisk == 100)
             {
                 viewInfo.colorOfBar = "bg-danger";
                 viewInfo.colorOfAnxiety = "NegOutcome.png";
@@ -158,11 +179,11 @@ namespace Foresight.Controllers
                 viewInfo.colorOfBar = "bg-danger";
                 viewInfo.colorOfAnxiety = "NegOutcome.png";
             }
-            
+            #endregion
             return View(viewInfo);
         }
 
-        
+
         public IActionResult EnterFormData(Form form)
         {
             ForesightContext db = new ForesightContext();
@@ -179,13 +200,13 @@ namespace Foresight.Controllers
             f.Question8 = form.Question8;
             f.Question9 = form.Question9;
             db.Add(f);
-           
+
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("CurrentFeelings");
         }
-       
-        
+
+
         public IActionResult AddCurrentFeelings(CurrentFeelings c)
         {
             ForesightContext db = new ForesightContext();
@@ -196,6 +217,7 @@ namespace Foresight.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize]
         public IActionResult CurrentFeelings()
         {
             return View();
