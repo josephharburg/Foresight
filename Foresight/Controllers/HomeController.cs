@@ -34,11 +34,11 @@ namespace Foresight.Controllers
             HttpContext.Session.SetInt32("current", cur.FormId);
             foreach (var item in db.UserData)
             {
-                if (item.UserDataDateTime >= DayofLastWeek && item.FormId == HttpContext.Session.GetInt32("current"))
+                if (item.UserDataDateTime >= DayofLastWeek && item.Email == User.Identity.Name)
                 {
                     view.userData.Add(item);
                 }
-                else if (item.UserDataDateTime >= DayofLastWeek && item.FormId != HttpContext.Session.GetInt32("current"))
+                else if (item.UserDataDateTime >= DayofLastWeek && item.Email != User.Identity.Name)
                 {
                     view.otherUsers.Add(item);
                 }
