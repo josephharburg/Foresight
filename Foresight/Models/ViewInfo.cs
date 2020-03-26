@@ -57,7 +57,7 @@ namespace Foresight.Models
             count += inclimentriskcount;
 
             count += (int)currentFeelings.DistanceRisk;
-            if(currentFeelings.DistanceRisk != 0)
+            if(currentFeelings.DistanceRisk > 0)
             {
                 this.distanceRisk = true;
             }
@@ -86,6 +86,11 @@ namespace Foresight.Models
             else
             {
                 this.totalPercentage = Math.Round((count / 110 * 100));
+            }
+
+            if(this.totalPercentage > 100)
+            {
+                this.totalPercentage = 100;
             }
         }
        

@@ -40,10 +40,10 @@ namespace Foresight.Controllers
                 }
                 else if (item.UserDataDateTime >= DayofLastWeek && item.FormId != HttpContext.Session.GetInt32("current"))
                 {
-
                     view.otherUsers.Add(item);
                 }
             }
+
             view.GetAverageRiskPercents();
 
             view.AreThingsLookingUp();
@@ -70,7 +70,7 @@ namespace Foresight.Controllers
             ForesightContext db = new ForesightContext();
             ViewInfo viewInfo = new ViewInfo();
             var user = db.UserData.Where(x => x.FormId == HttpContext.Session.GetInt32("current"));
-            if (choice == "Highest")
+            if (choice == "Highest Of All Time")
             {
                 var highestalltime = user.OrderByDescending(x => x.TotalPercentange);
                 var list = highestalltime.ToArray();
@@ -88,13 +88,18 @@ namespace Foresight.Controllers
                     {
                         viewInfo.userData.Add(item);
                     }
-
                 }
             }
 
             return View(viewInfo);
 
 
+        }
+        public IActionResult ShowPastPrediction(int user)
+        {
+            ForesightContext db = new ForesightContext();
+            UserData d = db.UserData.Where(x => x.DataId == user).FirstOrDefault();
+            return View(d);
         }
         [Authorize]
         public async Task<IActionResult> GetPrediction()
@@ -103,15 +108,15 @@ namespace Foresight.Controllers
             APIController apis = new APIController(_config);
             ViewInfo viewInfo = new ViewInfo();
 
-            //Gets all the weather infomation and puts into a model
-
-
             //Gets the current user based on latest update to profile by ordering dates by descending and selecting first one
             var currentuser = db.Form.Where(x => x.UserName == User.Identity.Name).OrderByDescending(x => x.FormDate).FirstOrDefault();
 
             //Same idea except for CurrentFeelings table
             CurrentFeelings currentFeelings = db.CurrentFeelings.OrderByDescending(x => x.CurrentFeelingsDateTime).FirstOrDefault();
+
+            //Gets all the weather infomation and puts into a model
             Weather w = await apis.GetWeather(currentFeelings.City);
+
             //Puts labels to integers in Form from current user
             Dictionary<string, int> values = GetIntsFromForm(currentuser);
 
@@ -131,7 +136,7 @@ namespace Foresight.Controllers
 
             //Uses all the data collected to get the risk percentages based on user values and the api results
             viewInfo.GetRiskPercents(w, values, currentFeelings);
-
+           
             //Accumulates the Data and adds it to the database for further use on Dashboard and Search
             UserData userData = new UserData()
             {
@@ -153,10 +158,7 @@ namespace Foresight.Controllers
             };
             db.UserData.Add(userData);
             db.SaveChanges();
-            //if(values["threshold"] < viewInfo.totalPercentage)
-            //{
-            //    viewInfo.riskThreshold = true;
-            //}
+
             //This Adjusts the view to show proper risk colors and percentage
             #region colorsofrisk
             if (currentFeelings.SickRisk == 100)
@@ -179,6 +181,7 @@ namespace Foresight.Controllers
                 viewInfo.colorOfBar = "bg-danger";
                 viewInfo.colorOfAnxiety = "NegOutcome.png";
             }
+            
             #endregion
             return View(viewInfo);
         }

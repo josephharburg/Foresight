@@ -43,11 +43,11 @@ namespace Foresight.Models
             }
             if (Distance == true)
             {
-                this.DistanceRisk = 10;
+                this.DistanceRisk = 0;
             }
             else
             {
-                this.DistanceRisk = 0;
+                this.DistanceRisk = 10;
             }
 
             if (Stress >= 9)
@@ -60,11 +60,11 @@ namespace Foresight.Models
             }
             if (WashingHands == true)
             {
-                this.HandsRisk = -25;
+                this.HandsRisk = -15;
             }
             else
             {
-                this.HandsRisk = 20;
+                this.HandsRisk = 25;
             }
 
         }

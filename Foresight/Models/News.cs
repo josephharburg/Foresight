@@ -29,7 +29,7 @@ namespace Foresight.Models
             }
             else if(this.title.ToLower().Contains("coronavirus"))
             {
-                return 10;
+                return 25;
             }
             else
             {

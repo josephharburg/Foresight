@@ -30,11 +30,11 @@ namespace Foresight.Models
             {
                 this.humid = false;
             }
-            if (this.temperature > 12 && this.temperature < 21)
+            if (this.temperature >= 12 && this.temperature <= 21)
             {
                 this.coldHot = "Warm";
             }
-            else if (this.temperature > 21)
+            else if (this.temperature >= 21)
             {
                 this.coldHot = "Hot";
             }
@@ -148,15 +148,15 @@ namespace Foresight.Models
             {
                 this.pollution = "Safe";
             }
-            else if (this.aqi > 50 && this.aqi < 100)
+            else if (this.aqi >= 50 && this.aqi < 100)
             {
                 this.pollution = "Moderate";
             }
-            else if (this.aqi > 100 && this.aqi < 300)
+            else if (this.aqi >= 100 && this.aqi < 300)
             {
                 this.pollution = "Unhealthy";
             }
-            else if (this.aqi > 300)
+            else if (this.aqi >= 300)
             {
                 this.pollution = "Hazardous";
             }
@@ -178,6 +178,10 @@ namespace Foresight.Models
             {
                 output += "The air pollution is higher than normal. You have a fear of pollution and you have allergies you might not be able to breathe if you leave your house!";
             }
+            else if (this.pollution != "Safe" && this.pollution != "Hazardous")
+            {
+                output += "The air pollution is higher than normal. Be aware of this before you go out.";
+            }
             else
             {
                 output += "The air pollution is terribly high! It's at hazardous Levels! DONT GO OUT!!!";
@@ -187,17 +191,21 @@ namespace Foresight.Models
         public double AqiRiskCalculator(int pollution, int allergies)
         {
             double risk = 0;
-            if (this.aqi > 50 && this.aqi < 300 && pollution >= 5 && allergies < 5)
+            if (this.aqi >= 50 && this.aqi < 300 && pollution >= 5 && allergies <= 5)
             {
                 risk = pollution;
             }
-            else if (this.aqi > 50 && this.aqi < 300 && allergies >= 5 && pollution < 5)
+            else if (this.aqi >= 50 && this.aqi < 300 && allergies >= 5 && pollution <= 5)
             {
                 risk = allergies;
             }
-            else if (this.aqi > 50 && this.aqi < 300 && allergies >= 5 && pollution >= 5)
+            else if (this.aqi >= 50 && this.aqi < 300 && allergies >= 5 && pollution >= 5)
             {
                 risk = allergies + pollution;
+            }
+            else if(this.aqi >= 50 && this.aqi < 300)
+            {
+                risk = 10;
             }
             else if (this.aqi >= 300)
             {

@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "ShowPastPrediction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model UserData
+<div class="text-center headFont display-3 pb-3">@Model.UserDataDateTime.Value.ToShortDateString() Risk Level</div>
+@if (Model.IsSick == true || Model.TotalPercentange >= 100)
+{
+    <div class="progress" style="height:10vh">
+        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated text-center" role="progressbar" style="width: @Model.TotalPercentange%" aria-valuenow="@Model.TotalPercentange" aria-valuemin="0" aria-valuemax="100"><h1>@Model.TotalPercentange%</h1></div>
+    </div>
+    <div class="container text-center pt-5">
+        <img class="mainpagelogo" src="~/img/NegOutcome.png" />
+    </div>}
+else
+{
+    <div class="progress" style="height:10vh">
+        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated text-center" role="progressbar" style="width: @Model.TotalPercentange%" aria-valuenow="@Model.TotalPercentange" aria-valuemin="0" aria-valuemax="100"><h1>@Model.TotalPercentange%</h1></div>
+    </div>
+    <div class="container text-center pt-5">
+        <img class="mainpagelogo" src="~/img/foresight.png" />
+    </div>
+}
+<div class="speechbubble text-center otherFont text-dark " style="font-size:x-large">
+    @if (Model.IsSick == true)
+    {<div class="lead">You were Sick this day.</div>
+    }
+    <div class="lead">
+        You were near @Model.City.
+        <br />You had @Model.Sleep hours of sleep.
+    </div>
+    @if (Model.WashingHands == true)
+    {
+        <div class="lead">You were not washing your hands regularly.</div>
+    }
+    else
+    {
+        <div class="lead">You were washing your hands regularly.</div>
+    }
+    @if (@Model.KeepingDistance == true)
+    {
+        <div class="lead">You were not keeping a good distance from others.</div>
+    }
+    else
+    {
+        <div class="lead">You were keeping a good distance from others.</div>
+    }
+    <div class="lead">
+        The temperature risk there for you was @Model.TempRiskPercent%.
+        <br />The Temperature there was @Model.Temperature degrees.
+        <br />The Air Pollution risk there for you was @Model.AqiriskPercent%.
+        <br />The Air Pollution level there was @Model.Aqi%.
+    </div>
+
+</div>

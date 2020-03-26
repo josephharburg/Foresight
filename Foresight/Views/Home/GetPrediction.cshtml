@@ -7,9 +7,9 @@
 @model ViewInfo
 
 
-<div class="text-center display-3 pb-3">Risk Level</div>
+<div class="text-center display-3 pb-3 headFont">Risk Level</div>
 <div class="progress" style="height:10vh">
-    <div class="progress-bar @Model.colorOfBar progress-bar-striped progress-bar-animated text-center" role="progressbar" style="width: @Model.totalPercentage%" aria-valuenow="@Model.totalPercentage" aria-valuemin="0" aria-valuemax="100"><h1>@Model.totalPercentage%</h1></div>
+    <div class="progress-bar otherFont @Model.colorOfBar progress-bar-striped progress-bar-animated text-center" role="progressbar" style="width: @Model.totalPercentage%" aria-valuenow="@Model.totalPercentage" aria-valuemin="0" aria-valuemax="100"><h1>@Model.totalPercentage%</h1></div>
 </div>
 @if (Model.riskThreshold)
 {
@@ -19,55 +19,56 @@
     <img class="mainpagelogo" src="~/img/@Model.colorOfAnxiety" />
 </div>
 <div id="carouselExampleControls" class="carousel slide mb-5" data-ride="carousel" data-interval="false">
-    <div class="carousel-inner pt-3">
+    <div class="carousel-inner otherFont fontLarger pt-3">
         @if (Model.isSick)
         {
-            <div class="speechbubble text-center text-white ">
-                <h1>You are Sick Do NOT GO OUT!</h1>
+            <div class="speechbubble text-center text-dark ">
+                <h1>You risk level is at 100%!</h1>
+                <h1>You are Sick DO NOT GO OUT!</h1>
             </div>
         }
         else
         { <div class="carousel-item active">
-                <div class="speechbubble text-center text-white ">
-                    <h1>This adds @Math.Round(Model.tempRiskPercent)% to the danger risk!</h1>
-                    <p class="lead">@Model.TempOutput</p>
+              <div class="speechbubble text-center text-dark ">
+                  <h1>Temperature</h1>
+                  <p class="lead">@Model.TempOutput. This adds @Math.Ceiling(Model.tempRiskPercent)% to your risk level.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+                <div class="speechbubble text-center text-dark">
+                    <h1>Air Quality</h1>
+                    <p class="lead">@Model.AqiOutput. This adds @Math.Ceiling(Model.aqiRiskPercent)% to your risk level.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="speechbubble text-center text-white">
-                    <h1>This adds @Math.Round(Model.aqiRiskPercent)% to the danger risk.</h1>
-                    <p class="lead">@Model.AqiOutput</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="speechbubble text-center text-white">
+                <div class="speechbubble text-center text-dark">
                     @if (Model.handsRisk)
                     {<h1> You havent been washing your hands.</h1>
-                        <p class="lead">You have increased your risk of getting sick significantly!</p>}
+                        <p class="lead">You have increased your risk of getting sick by 20%!</p>}
                     else
                     {
                         <h1> You have been washing your hands!</h1>
-                        <p class="lead">You have reduced your risk of getting sick significantly!</p>
+                        <p class="lead">You have reduced your risk of getting sick by 20%!</p>
                     }
                     @if (Model.distanceRisk)
                     {
-                        <h1>You havent been keeping your distance from others amidst this crises.</h1>
-                        <p class="lead">Keep your distance to stay healthy.</p>
+                        <h1>You havent been keeping your distance during the crises!</h1>
+                        <p class="lead">Keep your distance to stay healthy. This increased your risk by 10%.</p>
                     }
                     else
                     {
-                        <h1>You have been keeping your distance from others amidst this crises!</h1>
+                        <h1>You have been keeping your distance during the crises!</h1>
                         <p class="lead">Keep it up!</p>
                     }
                 </div>
             </div>
 
             <div class="carousel-item">
-                <div class="speechbubble text-center text-white">
+                <div class="speechbubble text-center text-dark">
                     @if (Model.sleepRisk)
                     {
                         <h1>You havent gotten at least 5 hours of sleep</h1>
-                        <p class="lead">Maybe you should take a nap or go to bed early!</p>
+                        <p class="lead">Maybe you should take a nap or go to bed early! This increases your risk by 18% </p>
                     }
                     else
                     {
@@ -77,33 +78,32 @@
                     @if (Model.stressRisk)
                     {
                         <h1>You are massively stressed out!</h1>
-                        <p class="lead">Maybe you should have a day in to relax and recoup from stress.</p>
+                        <p class="lead">Maybe you should have a day in to relax and recoup from stress. This added a 5% risk. </p>
                     }
                 </div>
             </div>
 
             <div class="carousel-item">
-                <div class="speechbubble text-center text-white">
-                    <h1>This adds @Math.Round(Model.inclimentRiskPercent)% to the danger risk.</h1>
-                    <p class="lead">@Model.Incliment</p>
+                <div class="speechbubble text-center text-dark">
+                   <h1>Weather</h1>
+                    <p class="lead">@Model.Incliment. This adds @Math.Round(Model.inclimentRiskPercent)% to the danger risk.</p>
                 </div>
             </div>
         }
         <div class="carousel-item">
-            <div class="speechbubble text-center text-white">
-                @*<h1>This adds @Math.Round(Model.newsRiskPercent)% to the danger risk.</h1>*@
+            <div class="speechbubble text-center text-dark otherFont fontLarger">
                 <div>
-                    <h3>Here is the latest news to be aware of:</h3>
+                    <h1>Here is the latest news to be aware of:</h1>
                     @foreach (var item in Model.news)
                     {
                         <img class="img-thumbnail" src="@item.urlToImage" style="width:200px;" />
-                        <h6>@item.title</h6>
+                        <p class="lead">@item.title</p>
                         <p class="lead">@item.description</p>
-                        <a href="@item.url" class="lead text-white">Click Here for full article.</a>
+                        <a href="@item.url" class="lead text-dark" target="_blank">Click Here for full article.</a>
                         <br />
                     }
                 </div>
-                <p class="lead">Powered by NewsAPI.org</p>
+                <p>Powered by NewsAPI.org</p>
             </div>
         </div>
 
@@ -117,3 +117,4 @@
         </a>
     </div>
 
+</div>

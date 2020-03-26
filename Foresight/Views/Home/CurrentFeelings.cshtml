@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CurrentFeelings</h1>
-<form asp-controller="Home" asp-action="AddCurrentFeelings">
-    <div class="form-group">
+<h1 class="headFont">Answer these questions to keep your predictions current!</h1>
+<form class="otherFont" asp-controller="Home" asp-action="AddCurrentFeelings">
+    <div class="form-group ">
         <label for="sleep">How many hours did you sleep did you get last night?</label>
         <select class="form-control" id="sleep" name="SleepHours" required>
             <option></option>
