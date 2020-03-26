@@ -79,7 +79,7 @@ options.SignIn.RequireConfirmedEmail = true
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=CurrentFeelings}/{id?}");
+                    pattern: "{controller=Home}/{action=WelcomePage}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

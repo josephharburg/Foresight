@@ -24,3 +24,18 @@
     </div>
 
 </form>
+
+@foreach (var item in Model.userData)
+{
+    <div class="card otherFont">
+        <div class="card-body">
+            <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
+            <h5>@item.UserDataDateTime.Value.ToString("hh:mm tt")</h5>
+            <div>Temperature: @item.Temperature</div>
+            <div>Air Pollutant Level: @item.Aqi%</div>
+            <div>Hours of Sleep: @item.Sleep</div>
+            <div class="card-text">Total Risk: @item.TotalPercentange%</div>
+            <a class="btn btn-primary" href=@Url.Action("ShowPastPrediction", "Home", new { user = @item.DataId })>Details</a>
+        </div>
+    </div>
+}

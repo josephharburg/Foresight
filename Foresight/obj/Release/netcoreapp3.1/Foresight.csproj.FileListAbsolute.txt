@@ -162,3 +162,5 @@ C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp3.1\Foresight.RazorTargetAssemblyInfo.cs
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp3.1\Foresight.Views.pdb
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp3.1\Foresight.csproj.CopyComplete
+C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp3.1\Razor\Views\Home\SearchView.cshtml.g.cs
+C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Release\netcoreapp3.1\Razor\Views\Home\ShowPastPrediction.cshtml.g.cs

@@ -2,90 +2,93 @@
     ViewData["Title"] = "Home Page";
 }
 @model Dashboard
-<div class="headFont display-1 text-center">Welcome to your dashboard!</div>
-<div class="container text-center">
-    @if (Model.userData.Count == 0)
-    {
-        <img class="mainpagelogo" src="~/img/foresight.png" />
-        <div class="speechbubble">
-            <div class="lead otherFont text-dark">You do not have any predictions yet!</div>
-        </div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">
-            <a class="text-white" asp-controller="Home" asp-action="GetPrediction">Click here for your First Prediction!</a>
-        </div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
-    }
-    @if (Model.lookingUp)
-    {
-        <img class="mainpagelogo" src="~/img/foresight.png" />
-        <div class="speechbubble">
-            <div class="lead text-dark otherFont" style="font-size:x-large">Things are looking up! <br /> Your most recent risk was less or the same as the previous one! Whatever you are doing keep it up!</div>
-            <div class="lead otherFont mb-2 text-center text-dark" style="font-size:x-large">Your risk average this week is: @Model.averagePercentage% </div>
-        </div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
-    }
-    else if (Model.lookingUp == false && Model.averagePercentage != 0)
-    {
-        <img class="mainpagelogo" src="~/img/NegOutcome.png" />
-        <div class="speechbubble">
-            <div class="lead otherFont" style="font-size:x-large">Things arent looking so good. Your most recent prediction was more than the previous one.</div>
-            <div class="lead otherFont mb-2 text-center text-dark" style="font-size:x-large">Your risk average this week is @Model.averagePercentage% </div>
-        </div> <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
-    }
-    else
-    {
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
-        <br />
-        <div class="btn-lg otherFont btn-primary">  <a class="text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
-    }
 
-</div>
-
-<div class="display-4 mt-5 text-center headFont">Here are your past week's risk percentages:</div>
-<hr />
-<div class="card-columns">
-
-    @foreach (var item in Model.userData)
-    {
-        <div class="card otherFont">
-            <div class="card-body">
-                <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
-                <h5>@item.UserDataDateTime.Value.ToShortTimeString()</h5>
-                <div>Temperature: @item.Temperature</div>
-                <div>Air Pollutant Level: @item.Aqi%</div>
-                <div>Hours of Sleep: @item.Sleep</div>
-                <div class="card-text">Total Risk: @item.TotalPercentange%</div>
-                <a class="btn btn-primary" href=@Url.Action("ShowPastPrediction", "Home", new { user = @item.DataId })>Details</a>
+    <div class="container text-center">
+        @if (Model.userData.Count == 0)
+        {
+            <img class="mainpagelogo" src="~/img/foresight.png" />
+            <div class="speechbubble">
+                <div class="headFont display-4 text-center">Welcome to your dashboard!</div>
+                <div class="lead otherFont text-dark">  You do not have any predictions yet!</div>
             </div>
-        </div>
-    }
-</div>
 
-<div class="text-center mb-2 mt-4 display-4 headFont">Here are some risk predictions for other users this week:</div>
-<div class="text-center mb-2 mt-4 otherFont" style="font-size:larger">The average risk this week for all other users is: @Model.allUsersAverage% </div>
-<hr />
-<div class="card-columns">
-    @foreach (var item in Model.otherUsers)
-    {
-        <div class="card otherFont">
-            <div class="card-body">
-                <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
-                <div>Date: @item.UserDataDateTime.Value.ToShortDateString()</div>
-                <div>UserName: @item.Email</div>
-                <div>City Nearest To: @item.City</div>
-                <div>Temperature: @item.Temperature</div>
-                <div>Air Pollutant Level: @item.Aqi%</div>
-                <div class="card-text">Risk Percentage: @item.TotalPercentange%</div>
+        }
+        @if (Model.lookingUp)
+        {
+            <img class="mainpagelogo" src="~/img/foresight.png" />
+            <div class="speechbubble">
+                <div class="headFont display-4 text-center">Welcome to your dashboard!</div>
+                <div class="lead text-dark otherFont" style="font-size:x-large">Things are looking up! <br /> Your most recent risk was less or the same as the previous one! Whatever you are doing keep it up!</div>
+                <div class="lead otherFont mb-2 text-center text-dark" style="font-size:x-large">Your risk average this week is: @Model.averagePercentage% </div>
             </div>
-        </div>
-    }
+            <br />
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
+            <br />
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
+        }
+        else if (Model.lookingUp == false && Model.averagePercentage != 0)
+        {
+            <img class="mainpagelogo" src="~/img/NegOutcome.png" />
+            <div class="speechbubble">
+                <div class="headFont display-4 text-center">Welcome to your dashboard!</div>
+                <div class="lead otherFont" style="font-size:x-large">Things arent looking so good. Your most recent prediction was more than the previous one.</div>
+                <div class="lead otherFont mb-2 text-center text-dark" style="font-size:x-large">Your risk average this week is @Model.averagePercentage% </div>
+            </div> <br />
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
+            <br />
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
+        }
+        else
+        {
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="GetPrediction">Get A Prediction</a></div>
+            <br />
+            <div class="btn-lg otherFont btn-primary">  <a class="display-4 text-white" asp-controller="Home" asp-action="CurrentFeelings">Feeling Different From Earlier?</a></div>
+        }
 
-</div>
+
+        <img class="mainpagelogo" src="~/img/foresight.png" />
+        <div class="speechbubble mt-2">
+            <div class="display-4 text-center headFont">Here are your past week's risk percentages:</div>
+        </div>
+        <hr />
+        <div class="card-columns">
+
+            @foreach (var item in Model.userData)
+            {
+                <div class="card otherFont">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
+                        <h5>@item.UserDataDateTime.Value.ToString("hh:mm tt")</h5>
+                        <div>Temperature: @item.Temperature degrees</div>
+                        <div>Air Pollutant Level: @item.Aqi%</div>
+                        <div>Hours of Sleep: @item.Sleep</div>
+                        <div class="card-text">Total Risk: @item.TotalPercentange%</div>
+                        <a class="btn btn-primary" href=@Url.Action("ShowPastPrediction", "Home", new { user = @item.DataId })>Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <img class="mainpagelogo text-center" src="~/img/foresight.png" />
+        <div class="speechbubble mt-2">
+            <div class="text-center mb-2 display-4 headFont">Here are some risk predictions for other users this week:</div>
+            <div class="text-center mb-2 otherFont" style="font-size:xx-large">The average risk this week for all other users is: @Model.allUsersAverage% </div>
+        </div>
+        <hr />
+        <div class="card-columns">
+            @foreach (var item in Model.otherUsers)
+            {
+                <div class="card otherFont">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.UserDataDateTime.GetValueOrDefault().DayOfWeek</h5>
+                        <div>Date: @item.UserDataDateTime.Value.ToShortDateString()</div>
+                        <div>UserName: @item.Email</div>
+                        <div>City Nearest To: @item.City</div>
+                        <div>Temperature: @item.Temperature degrees</div>
+                        <div>Air Pollutant Level: @item.Aqi%</div>
+                        <div class="card-text">Risk Percentage: @item.TotalPercentange%</div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>

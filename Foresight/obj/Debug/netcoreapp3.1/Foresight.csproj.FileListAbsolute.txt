@@ -326,3 +326,4 @@ C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetPrediction.cshtml.g.cs
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\SearchView.cshtml.g.cs
 C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\ShowPastPrediction.cshtml.g.cs
+C:\Users\josep\source\repos\Foresight\Foresight\Foresight\obj\Debug\netcoreapp3.1\Razor\Views\Home\WelcomePage.cshtml.g.cs

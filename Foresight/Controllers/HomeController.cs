@@ -209,7 +209,10 @@ namespace Foresight.Controllers
             return RedirectToAction("CurrentFeelings");
         }
 
-
+        public IActionResult WelcomePage()
+        {
+            return View();
+        }
         public IActionResult AddCurrentFeelings(CurrentFeelings c)
         {
             ForesightContext db = new ForesightContext();
